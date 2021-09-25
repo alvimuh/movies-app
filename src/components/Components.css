@@ -1,0 +1,41 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 12px;
+}
+.grid {
+  display: grid;
+  gap: 12px;
+}
+.movie-card {
+  max-width: 100%;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.movie-card .poster {
+  height: 400px;
+  overflow: hidden;
+}
+
+.movie-card .meta-info {
+  float: left;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  background: linear-gradient(0deg, black, transparent);
+  width: 100%;
+  padding-top: 80px;
+}
+.movie-card .meta-info h3 {
+  color: #fff;
+  padding: 6px 12px;
+}
+.form {
+  padding: 8px 14px;
+  font-size: 14pt;
+}
+.form:hover,
+.form:focus {
+  outline-color: rgba(47, 0, 255, 0.534);
+}
