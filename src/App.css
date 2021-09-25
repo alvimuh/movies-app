@@ -13,6 +13,9 @@ body {
   font-size: 3rem;
   font-weight: 300;
 }
+.headline-desc {
+  color: white;
+}
 .movie-list {
   margin-bottom: 80px;
 }

@@ -15,7 +15,6 @@ function MovieCard(props) {
   );
 }
 MovieCard.propTypes = {
-  children: PropTypes.node,
   Poster: PropTypes.string,
   Title: PropTypes.string,
   Type: PropTypes.string,

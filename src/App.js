@@ -1,28 +1,22 @@
 import React from "react";
 import "./App.css";
 import Home from "./pages/Home";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducer from "./redux/reducer";
+
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 function App() {
   return (
-    <div>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+    <Provider store={store}>
       <main>
         <Home />
       </main>
-    </div>
+    </Provider>
   );
 }
 

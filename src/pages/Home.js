@@ -1,53 +1,42 @@
 import axios from "axios";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Button, Container, Grid, Input, MovieCard } from "../components";
 
-function Home() {
-  const initialData = {
-    loading: true,
-    Response: null,
-    Search: [],
-    totalResults: 0,
-    totalItems: 0,
-    nextPage: 1,
-    totalShowing: 5,
-  };
-  const [data, setData] = useState(initialData);
+function Home(props) {
   const searchData = async (newKeyword = false) => {
     try {
       const res = await axios.get(
         `http://www.omdbapi.com?apikey=${"c119f187"}&s=${
           formData.keyword ? formData.keyword : "Batman"
-        }&page=${data.nextPage}`
+        }&page=${props.nextPage}`
       );
-      if (newKeyword) {
-        setData((prev) => ({
-          ...prev,
-          Response: res.data.Response,
-          Search: res.data.Search,
-          loading: false,
-          totalItems: res.data.Search.length,
-          totalResults: res.data.totalResults,
-          nextPage: 1,
-          totalShowing: 5,
-        }));
-      } else {
-        let prevSearchData = data.Search;
-        if (res.data.Search) {
-          prevSearchData.push(...res.data.Search);
-        }
-        setData((prev) => ({
-          ...prev,
-          Response: res.data.Response,
-          Search: prevSearchData,
-          loading: false,
-          totalItems: prevSearchData.length,
-          totalResults: res.data.totalResults,
-          nextPage: prev.nextPage + 1,
-        }));
+
+      let prevSearchData = newKeyword ? [] : props.Search;
+      if (res.data.Search) {
+        prevSearchData.push(...res.data.Search);
       }
+      props.setMovies({
+        Response: res.data.Response,
+        Search: prevSearchData,
+        loading: false,
+        totalItems: prevSearchData.length,
+        totalResults: res.data.totalResults,
+        nextPage: newKeyword ? 1 : props.nextPage + 1,
+        totalShowing: newKeyword ? 5 : props.totalShowing,
+      });
+      // setData((prev) => ({
+      //   Response: res.data.Response,
+      //   Search: prevSearchData,
+      //   loading: false,
+      //   totalItems: prevSearchData.length,
+      //   totalResults: res.data.totalResults,
+      //   nextPage: newKeyword ? 1 : prev.nextPage + 1,
+      //   totalShowing: newKeyword ? 5 : prev.totalShowing,
+      // }));
     } catch (error) {
-      console.log(error);
+      props.setError();
     }
   };
   useEffect(() => {
@@ -66,11 +55,10 @@ function Home() {
           y + contentRef.current.offsetHeight >
             contentRef.current?.getBoundingClientRect().top + window.scrollY //check if target in viewport
         ) {
-          setData((prev) => ({
-            ...prev,
-            totalShowing: prev.totalShowing + 5,
-          }));
-          if (data.totalShowing === data.totalItems) {
+          props.setMovies({
+            totalShowing: props.totalShowing + 5,
+          });
+          if (props.totalShowing === props.totalItems) {
             searchData();
           }
         }
@@ -99,7 +87,7 @@ function Home() {
     <Container>
       <header className="header">
         <h1 className="headline">
-          Cari Film yang Membuat Harimu Menyenangkan!
+          Temukan Film yang Membuat Harimu Menyenangkan!
         </h1>
         <form
           onSubmit={(e) => {
@@ -115,25 +103,60 @@ function Home() {
           />
           <Button>Cari</Button>
         </form>
+        {props.totalResults > 0 ? (
+          <p className="headline-desc">Ditemukan {props.totalResults} film</p>
+        ) : (
+          <p className="headline-desc">Tidak ada film pada keyword tersebut</p>
+        )}
       </header>
       <section className="movie-list">
         <Grid colMobile={2} colDesktop={5}>
-          {data.Search.map((props, index) => {
-            if (index < data.totalShowing)
+          {props.Search.map((data, index) => {
+            if (index < props.totalShowing) {
               return (
                 <MovieCard
                   key={index}
-                  {...props}
+                  {...data}
                   lastMovieRef={
-                    index + 1 === data.totalShowing ? contentRef : null
+                    index + 1 === props.totalShowing ? contentRef : null
                   }
                 />
               );
+            }
           })}
         </Grid>
       </section>
     </Container>
   );
 }
+Home.propTypes = {
+  setMovies: PropTypes.func,
+  setError: PropTypes.func,
+  loading: PropTypes.bool,
+  Response: PropTypes.string,
+  Search: PropTypes.array,
+  totalResults: PropTypes.string,
+  totalItems: PropTypes.number,
+  nextPage: PropTypes.number,
+  totalShowing: PropTypes.number,
+};
+const mapStateToProps = (state) => {
+  return {
+    loading: state.loading,
+    Response: state.Response,
+    Search: state.Search,
+    totalResults: state.totalResults,
+    totalItems: state.totalItems,
+    nextPage: state.nextPage,
+    totalShowing: state.totalShowing,
+  };
+};
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMovies: (action) => dispatch({ type: "SET_MOVIES", ...action }),
+    setError: () => dispatch({ type: "SET_ERROR" }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
