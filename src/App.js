@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducer from "./redux/reducer";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const store = createStore(
   reducer,
@@ -14,7 +15,11 @@ function App() {
   return (
     <Provider store={store}>
       <main>
-        <Home />
+        <Router>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Router>
       </main>
     </Provider>
   );
