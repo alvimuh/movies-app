@@ -1,6 +1,6 @@
 # Movie Web App with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is simple web react app that consume data from [http://www.omdbapi.com](http://www.omdbapi.com) 
 
 ## How to run locally
 
