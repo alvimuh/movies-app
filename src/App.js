@@ -1,10 +1,11 @@
 import React from "react";
 import "./App.css";
 import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducer from "./redux/reducer";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const store = createStore(
   reducer,
@@ -16,7 +17,10 @@ function App() {
     <Provider store={store}>
       <main>
         <Router>
-          <Route path="/">
+          <Route path="/movie/:id">
+            <Detail />
+          </Route>
+          <Route path="/" exact>
             <Home />
           </Route>
         </Router>

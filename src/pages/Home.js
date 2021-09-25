@@ -8,7 +8,7 @@ function Home(props) {
   const searchData = async (newKeyword = false) => {
     try {
       const res = await axios.get(
-        `http://www.omdbapi.com?apikey=${"c119f187"}&s=${
+        `http://www.omdbapi.com?apikey=faf7e5bb&s=${
           formData.keyword ? formData.keyword : "Batman"
         }&page=${props.nextPage}`
       );
@@ -26,15 +26,6 @@ function Home(props) {
         nextPage: newKeyword ? 1 : props.nextPage + 1,
         totalShowing: newKeyword ? 5 : props.totalShowing,
       });
-      // setData((prev) => ({
-      //   Response: res.data.Response,
-      //   Search: prevSearchData,
-      //   loading: false,
-      //   totalItems: prevSearchData.length,
-      //   totalResults: res.data.totalResults,
-      //   nextPage: newKeyword ? 1 : prev.nextPage + 1,
-      //   totalShowing: newKeyword ? 5 : prev.totalShowing,
-      // }));
     } catch (error) {
       props.setError();
     }

@@ -19,3 +19,31 @@ body {
 .movie-list {
   margin-bottom: 80px;
 }
+.movie-detail {
+  margin: 50px 0;
+}
+.movie-detail .poster {
+  margin: auto;
+  display: block;
+}
+.movie-detail h1 {
+  color: white;
+}
+.movie-detail table {
+  color: white;
+}
+.movie-detail table th {
+  text-align: left;
+  opacity: 0.8;
+}
+.movie-detail table td {
+  text-align: left;
+  opacity: 0.9;
+  padding: 0 12px;
+}
+.back {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px 12px;
+  text-decoration: none;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./Components.css";
+import { Link } from "react-router-dom";
 
 function MovieCard(props) {
   return (
@@ -9,7 +10,9 @@ function MovieCard(props) {
         <img src={props.Poster} />
       </div>
       <div className="meta-info">
-        <h3>{props.Title}</h3>
+        <Link to={"/movie/" + props.imdbID}>
+          <h3>{props.Title}</h3>
+        </Link>
       </div>
     </div>
   );
