@@ -8,7 +8,7 @@ function Home(props) {
   const searchData = async (newKeyword = false) => {
     try {
       const res = await axios.get(
-        `http://www.omdbapi.com?apikey=faf7e5bb&s=${
+        `https://www.omdbapi.com?apikey=faf7e5bb&s=${
           formData.keyword ? formData.keyword : "Batman"
         }&page=${props.nextPage}`
       );

@@ -15,7 +15,7 @@ function Detail() {
   const getData = async () => {
     try {
       const res = await axios.get(
-        `http://www.omdbapi.com?apikey=faf7e5bb&i=${id}`
+        `https://www.omdbapi.com?apikey=faf7e5bb&i=${id}`
       );
       setData((prev) => ({
         ...prev,
