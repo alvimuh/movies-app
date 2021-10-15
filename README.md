@@ -10,3 +10,6 @@ In your directory, you can run:
 - cd movies-app
 - npm install
 - npm start
+
+## Live demo
+[https://movies-app-nine-ashy.vercel.app/](https://movies-app-nine-ashy.vercel.app/)
